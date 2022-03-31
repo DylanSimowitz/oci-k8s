@@ -33,10 +33,7 @@ spec:
       replicas: 1
     service:
       enabled: true
-      type: LoadBalancer
-      spec:
-        loadBalancerIP: "${METALLB_TRAEFIK_ADDR}"
-        externalTrafficPolicy: Local
+      type: NodePort
     logs:
       general:
         format: json
