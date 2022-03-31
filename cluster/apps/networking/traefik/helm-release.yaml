@@ -64,8 +64,6 @@ spec:
         expose: true
       web:
         expose: true
-        port: 8000
-        targetPort: 8000
         nodePort: 32080
         redirectTo: websecure
       websecure:
