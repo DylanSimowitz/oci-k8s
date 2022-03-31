@@ -68,6 +68,7 @@ spec:
       web:
         redirectTo: websecure
       websecure:
+        nodePort: 32443
         tls:
           enabled: true
           options: "default"
