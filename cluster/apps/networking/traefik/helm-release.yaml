@@ -65,7 +65,6 @@ spec:
       web:
         expose: true
         nodePort: 32080
-        redirectTo: websecure
       websecure:
         tls:
           enabled: true
