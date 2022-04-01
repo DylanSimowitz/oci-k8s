@@ -28,7 +28,6 @@ main() {
     verify_binaries
 
     if [[ "${verify}" == 1 ]]; then
-        verify_metallb
         verify_kubevip
         verify_age
         verify_git_repository
@@ -39,8 +38,6 @@ main() {
         envsubst < "${PROJECT_DIR}/tmpl/.sops.yaml" \
             > "${PROJECT_DIR}/.sops.yaml"
         # cluster
-        envsubst < "${PROJECT_DIR}/tmpl/cluster/cluster-settings.yaml" \
-            > "${PROJECT_DIR}/cluster/base/cluster-settings.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/cluster/gotk-sync.yaml" \
             > "${PROJECT_DIR}/cluster/base/flux-system/gotk-sync.yaml"
         envsubst < "${PROJECT_DIR}/tmpl/cluster/kube-vip-daemonset.yaml" \
@@ -157,20 +154,6 @@ verify_binaries() {
 verify_kubevip() {
     _has_envar "BOOTSTRAP_KUBE_VIP_ADDRESS"
     _has_valid_ip "${BOOTSTRAP_KUBE_VIP_ADDRESS}" "BOOTSTRAP_KUBE_VIP_ADDRESS"
-}
-
-verify_metallb() {
-    local ip_floor=
-    local ip_ceil=
-    _has_envar "BOOTSTRAP_METALLB_LB_RANGE"
-    _has_envar "BOOTSTRAP_METALLB_TRAEFIK_ADDR"
-
-    ip_floor=$(echo "${BOOTSTRAP_METALLB_LB_RANGE}" | cut -d- -f1)
-    ip_ceil=$(echo "${BOOTSTRAP_METALLB_LB_RANGE}" | cut -d- -f2)
-
-    _has_valid_ip "${ip_floor}" "BOOTSTRAP_METALLB_LB_RANGE"
-    _has_valid_ip "${ip_ceil}" "BOOTSTRAP_METALLB_LB_RANGE"
-    _has_valid_ip "${BOOTSTRAP_METALLB_TRAEFIK_ADDR}" "BOOTSTRAP_METALLB_TRAEFIK_ADDR"
 }
 
 verify_git_repository() {

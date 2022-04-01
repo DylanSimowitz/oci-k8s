@@ -4,4 +4,3 @@ resources:
   - namespaces
   - cert-manager
   - kube-system
-  - metallb-system
